@@ -1,0 +1,1203 @@
+/*
+  DỮ LIỆU ĐỊA ĐIỂM — Cẩm nang Du lịch Đà Lạt Check-in 2026
+  ------------------------------------------------
+  Dữ liệu đầy đủ bộ ảnh (Gallery), hình ảnh thực tế từng địa điểm, 
+  liên kết Reels TikTok trực tiếp cho từng địa danh, giờ mở cửa & gợi ý ẩm thực.
+*/
+
+const HERO_SLIDES = [
+  {
+    id: "ho-xuan-huong",
+    badge: "🏛️ Di sản & Danh thắng 1919",
+    year: "1919",
+    title: "Hồ Xuân Hương",
+    subtitle: "Trái Tim Thơ Mộng Giữa Lòng Thành Phố Sương Mù",
+    quote: "Mặt hồ hình lưỡi liềm uốn lượn ôm lấy ngàn hoa, được đặt theo tên Nữ sĩ Hồ Xuân Hương từ năm 1953.",
+    image: "image/ho-xuan-huong.webp",
+    rating: "4.9 ★ (2.4k đánh giá)",
+    category: "Hồ nước & Di sản",
+    tiktokUrl: "https://www.tiktok.com/search?q=H%E1%BB%93%20Xu%C3%A2n%20H%C6%B0%C6%A1ng%20%C4%90%C3%A0%20L%E1%BA%A1t"
+  },
+  {
+    id: "nha-tho-con-ga",
+    badge: "⛪ Kiến trúc Roman-Gothic 1931",
+    year: "1931",
+    title: "Nhà thờ Con Gà",
+    subtitle: "Thánh Đường Pháp Cổ Với Chú Gà Đồng Huyền Thoại",
+    quote: "Công trình tiêu biểu cho kiến trúc Pháp cổ thế kỷ 20 với tháp chuông 47m và 70 tấm kính màu nhập từ Pháp.",
+    image: "image/nha-tho-con-ga.webp",
+    rating: "4.8 ★ (1.9k đánh giá)",
+    category: "Kiến trúc Pháp cổ",
+    tiktokUrl: "https://www.tiktok.com/search?q=Nh%C3%A0%20th%E1%BB%9D%20Con%20G%C3%A0%20%C4%90%C3%A0%20L%E1%BA%A1t"
+  },
+  {
+    id: "ga-da-lat",
+    badge: "🚂 Nhà Ga Cổ Nhất Đông Dương 1932",
+    year: "1932",
+    title: "Ga Đà Lạt",
+    subtitle: "Kiệt Tác Art Déco Tượng Trưng Cho Đỉnh LangBiang",
+    quote: "Nhà ga xe lửa răng cưa độc đáo bậc nhất thế giới, lưu giữ đầu máy hơi nước nguyên bản sản xuất từ 1936.",
+    image: "image/ga-da-lat-1.webp",
+    rating: "4.9 ★ (2.1k đánh giá)",
+    category: "Di sản Kiến trúc",
+    tiktokUrl: "https://www.tiktok.com/search?q=Ga%20%C4%90%C3%A0%20L%E1%BA%A1t"
+  },
+  {
+    id: "ho-tuyen-lam",
+    badge: "🌲 Khu Du Lịch Quốc Gia 1987",
+    year: "1987",
+    title: "Hồ Tuyền Lâm",
+    subtitle: "Mặt Hồ Phẳng Lặng Ôm Trọn Bởi Rừng Thông Bạt Ngàn",
+    quote: "Suối chảy giữa rừng thông bạt ngàn — thiên đường chèo SUP, kayak & ngắm hoàng hôn lãng mạn.",
+    image: "image/ho-tuyen-lam.webp",
+    rating: "4.9 ★ (3.1k đánh giá)",
+    category: "Cảnh quan Thiên nhiên",
+    tiktokUrl: "https://www.tiktok.com/search?q=H%E1%BB%93%20Tuy%E1%BB%81n%20L%C3%A2m%20%C4%90%C3%A0%20L%E1%BA%A1t"
+  },
+  {
+    id: "quang-truong-lam-vien",
+    badge: "🌸 Biểu Tượng Hiện Đại 2016",
+    year: "2016",
+    title: "Quảng Trường Lâm Viên",
+    subtitle: "Bông Hoa Dã Qùy & Nụ Hoa Atiso Khổng Lồ Kính Màu",
+    quote: "Trái tim sôi động của giới trẻ Đà Lạt với công trình khối kính nụ hoa Atiso vàng kim rực rỡ.",
+    image: "image/quang-truong-lam-vien.webp",
+    rating: "4.8 ★ (4.5k đánh giá)",
+    category: "Vui chơi & Check-in",
+    tiktokUrl: "https://www.tiktok.com/search?q=Qu%E1%BA%A3ng%20tr%C6%B0%E1%BB%9Dng%20L%C3%A2m%20Vi%C3%AAn"
+  }
+];
+
+const BLOOMING_SEASONS = [
+  { month: "Tháng 1 – 2", flower: "🌸 Mai Anh Đào", desc: "Sắc hồng rực rỡ khắp Trần Hưng Đạo, Cầu Đất & Hồ Tuyền Lâm." },
+  { month: "Tháng 3 – 4", flower: "💜 Phượng Tím", desc: "Sắc tím lãng mạn ngập tràn góc phố chợ Đà Lạt & Nguyễn Thị Minh Khai." },
+  { month: "Tháng 5 – 9", flower: "🌺 Cẩm Tú Cầu", desc: "Đồi hoa cẩm tú cầu xanh biếc nở rộ rực rỡ tại Trại Mát & Trạm Hành." },
+  { month: "Tháng 10 – 11", flower: "🌼 Dã Quỳ Vàng", desc: "Thảm hoa vàng ruộm dải lụa đèo Prenn, đường đi Tu Tra & Đèo Dran." },
+  { month: "Tháng 11 – 12", flower: "💖 Cỏ Hồng & Sương", desc: "Đồi cỏ hồng Mơ Thung & Đập Suối Vàng rạng rỡ hừng đông sương sớm." }
+];
+
+const CATEGORIES = {
+  ho: { label: "Hồ nước", icon: "wave" },
+  "kien-truc": { label: "Kiến trúc", icon: "arch" },
+  thac: { label: "Thác nước", icon: "falls" },
+  "nui-doi": { label: "Núi & Đồi", icon: "peak" },
+  "tam-linh": { label: "Tâm linh", icon: "lotus" },
+  "vuon-hoa": { label: "Vườn hoa", icon: "flower" },
+  "vui-choi": { label: "Vui chơi & Ẩm thực", icon: "star" },
+};
+
+const LOCATIONS = [
+  {
+    id: "ho-xuan-huong",
+    name: "Hồ Xuân Hương",
+    category: "ho",
+    lat: 11.941,
+    lng: 108.4419,
+    image: "image/ho-xuan-huong.webp",
+    gallery: [
+      "image/ho-xuan-huong.webp",
+      "image/ho-xuan-huong-2.webp",
+      "image/ho-xuan-huong-3.webp"
+    ],
+    video: "https://assets.mixkit.co/videos/preview/mixkit-lake-surrounded-by-forest-under-a-blue-sky-43187-large.mp4",
+    tiktokVideoId: "7601868238388989191",
+    tiktokUrl: "https://www.tiktok.com/@.lt.3605/video/7601868238388989191",
+    teaser: "Trái tim thơ mộng giữa lòng thành phố sương mù.",
+    desc: "Hồ nhân tạo hình lưỡi liềm nằm ngay trung tâm Đà Lạt, được bao quanh bởi rừng thông, vườn hoa ven bờ và những con đường uốn lượn lãng mạn. Đây là biểu tượng không thể thiếu khi nhắc đến thành phố ngàn hoa.",
+    history: "Hồ Xuân Hương được hình thành từ năm 1919, khi người Pháp xây đập chắn suối Cam Ly để tạo hồ nhân tạo phục vụ quy hoạch đô thị nghỉ dưỡng. Ban đầu hồ được gọi là Grand Lac (Hồ Lớn). Năm 1953, hồ được đặt theo tên nữ sĩ Hồ Xuân Hương — một trong những nữ thi sĩ nổi tiếng nhất của văn học Việt Nam. Qua nhiều lần cải tạo vào các năm 1935, 1946 và gần đây nhất là 2010, hồ vẫn giữ nguyên hình dáng lưỡi liềm đặc trưng với chu vi khoảng 5km.",
+    price: "Miễn phí — thuê xe ngựa/thuyền dạo hồ khoảng 100.000đ - 300.000đ",
+    address: "Trung tâm TP. Đà Lạt",
+    tip: "Đẹp nhất lúc bình minh sớm hoặc khi hồ lên đèn buổi tối.",
+    openingHours: "Mở cửa cả ngày (24/7)",
+    bestTime: "5:30 – 7:30 sáng & 17:00 – 19:00 chiều",
+    suggestedDuration: "1 – 2 giờ",
+    idealFor: "Cặp đôi, Gia đình, Bạn trẻ chụp ảnh, Đi dạo",
+    highlights: [
+      "Đạp vịt thuyền Thiên Nga ngắm cảnh hồ lãng mạn",
+      "Dạo quanh hồ bằng xe đạp đôi sương sớm",
+      "Thưởng thức cà phê Thủy Tạ & Tím Thanh Thủy góc hồ"
+    ],
+    nearbyFood: [
+      "Bánh tráng nướng Bờ Hồ",
+      "Sữa đậu nành nóng & Bánh su kem",
+      "Kem bơ Thanh Thảo"
+    ]
+  },
+  {
+    id: "nha-tho-con-ga",
+    name: "Nhà thờ Con Gà",
+    category: "kien-truc",
+    lat: 11.9421,
+    lng: 108.4402,
+    image: "image/nha-tho-con-ga.webp",
+    gallery: [
+      "image/nha-tho-con-ga.webp",
+      "image/nha-tho-con-ga-1.webp",
+      "image/nha-tho-con-ga-2.webp"
+    ],
+    tiktokVideoId: "7573613360974023952",
+    tiktokUrl: "https://www.tiktok.com/@tourdulichviet/video/7573613360974023952",
+    teaser: "Thánh đường Pháp cổ với chú gà đồng trên đỉnh tháp.",
+    desc: "Nhà thờ Chính tòa Đà Lạt (tên chính thức: Nhà thờ Chính tòa Thánh Nicôla Bari) là một trong những công trình kiến trúc Pháp đẹp nhất tại Đà Lạt, mang phong cách kiến trúc Roman pha Gothic với tháp chuông cao 47 mét.",
+    history: "Nhà thờ được khởi công xây dựng năm 1931 theo thiết kế của kiến trúc sư người Pháp Paul Music và hoàn thành năm 1942. Công trình mang phong cách kiến trúc Roman kết hợp Gothic châu Âu thế kỷ 17. Trên đỉnh tháp chuông là hình tượng con gà trống Gaulois bằng đồng cao 0,66m — biểu tượng của nước Pháp. 70 tấm kính màu của nhà thờ được chế tác tại Pháp, mô tả các tích truyện trong Kinh Thánh.",
+    price: "Miễn phí tham quan",
+    address: "15 Trần Phú, Phường 3",
+    tip: "Có thể tham dự thánh lễ Chủ nhật, nên ăn mặc lịch sự khi vào bên trong.",
+    openingHours: "05:15 – 17:15 (Tất cả các ngày)",
+    bestTime: "8:00 – 10:00 sáng & 15:00 – 16:30 chiều",
+    suggestedDuration: "45 phút – 1 giờ",
+    idealFor: "Yêu kiến trúc cổ, Bạn trẻ check-in, Nhiếp ảnh",
+    highlights: [
+      "Ngắm chú gà đồng huyền thoại trên tháp chuông 47m",
+      "Chiêm ngưỡng 70 tấm kính màu chế tác từ Pháp",
+      "Chụp ảnh phong cách Châu Âu cổ điển góc sân thánh đường"
+    ],
+    nearbyFood: [
+      "Bánh mì xíu mại Hoàng Diệu",
+      "Lẩu bò Ba Toa",
+      "Nem nướng Bà Hùng"
+    ]
+  },
+  {
+    id: "ho-tuyen-lam",
+    name: "Hồ Tuyền Lâm",
+    category: "ho",
+    lat: 11.9017,
+    lng: 108.4497,
+    image: "image/ho-tuyen-lam.webp",
+    gallery: [
+      "image/ho-tuyen-lam.webp",
+      "image/ho-tuyen-lam-1.webp",
+      "image/ho-tuyen-lam-2.webp"
+    ],
+    tiktokVideoId: "7609314328109501716",
+    tiktokUrl: "https://www.tiktok.com/@nhat.le.trs/video/7609314328109501716",
+    teaser: "Mặt hồ phẳng lặng ôm trọn bởi rừng thông bạt ngàn.",
+    desc: "Hồ nước ngọt lớn nhất Đà Lạt với diện tích mặt nước khoảng 320 ha, được bao bọc bởi rừng thông nguyên sinh trùng điệp. Nơi đây lý tưởng cho các hoạt động chèo SUP, kayak, câu cá hay dạo bước qua những cây cầu gỗ ven hồ.",
+    history: "Hồ Tuyền Lâm (nghĩa là 'suối chảy giữa rừng') được hình thành năm 1982–1987 khi đập Quang Trung được xây dựng chắn dòng suối Tía. Năm 1998, khu vực quanh hồ được quy hoạch thành Khu du lịch quốc gia Hồ Tuyền Lâm rộng hơn 2.300 ha. Năm 2017, hồ được công nhận là Khu du lịch quốc gia theo quyết định của Thủ tướng Chính phủ.",
+    price: "Miễn phí vào cổng — phí thuê thuyền/SUP tính riêng",
+    address: "Phường 4, cách trung tâm khoảng 6km",
+    tip: "Kết hợp ghé Thiền viện Trúc Lâm hoặc Đồi Robin ngay gần đó.",
+    openingHours: "Mở cửa cả ngày (24/7)",
+    bestTime: "6:00 – 9:00 sáng (Chèo SUP săn sương)",
+    suggestedDuration: "2 – 4 giờ",
+    idealFor: "Người yêu thiên nhiên, Dã ngoại, Chèo thuyền SUP",
+    highlights: [
+      "Chèo thuyền SUP & Kayak ngắm lá đỏ mùa thu",
+      "Đi cano dạo quanh các đảo thông thơ mộng",
+      "Cắm trại Picnic ven hồ thanh bình"
+    ],
+    nearbyFood: [
+      "Gà nướng cơm lam Tuyền Lâm",
+      "Rượu cần Tây Nguyên",
+      "Rau rừng luộc kho quẹt"
+    ]
+  },
+  {
+    id: "ga-da-lat",
+    name: "Ga Đà Lạt",
+    category: "kien-truc",
+    lat: 11.9436,
+    lng: 108.4494,
+    image: "image/ga-da-lat.webp",
+    gallery: [
+      "image/ga-da-lat.webp",
+      "image/ga-da-lat-2.webp",
+      "image/ga-da-lat-3.webp"
+    ],
+    tiktokVideoId: "7437356060291239176",
+    tiktokUrl: "https://www.tiktok.com/@thechoco.vn/video/7437356060291239176",
+    teaser: "Nhà ga cổ được xem là đẹp nhất Đông Dương.",
+    desc: "Nhà ga xe lửa mang phong cách Art Déco với ba mái nhọn tượng trưng cho ba đỉnh núi Langbiang, lưu giữ đầu máy hơi nước Nhật Bản chế tạo năm 1936. Ga Đà Lạt từng được báo Pháp bình chọn là nhà ga đẹp nhất Đông Dương.",
+    history: "Ga Đà Lạt được xây dựng từ năm 1932 đến 1938 theo thiết kế của hai kiến trúc sư Pháp Moncet và Reveron, lấy cảm hứng từ ga Trouville-Deauville ở Normandie. Tuyến đường sắt răng cưa Tháp Chàm – Đà Lạt dài 84km là tuyến độc đáo bậc nhất thời bấy giờ.",
+    price: "Vé tham quan khoảng 50.000đ",
+    address: "Số 1 Quang Trung, Phường 10",
+    tip: "Có thể mua vé tàu ngắn từ ga đến Trại Mát để ghé Chùa Linh Phước.",
+    openingHours: "07:00 – 18:00 hàng ngày",
+    bestTime: "8:30 – 10:30 sáng & 14:00 – 16:00 chiều",
+    suggestedDuration: "1 – 2 giờ",
+    idealFor: "Nhiếp ảnh hoài cổ, Gia đình, Du khách tham quan",
+    highlights: [
+      "Check-in đầu máy xe lửa hơi nước sản xuất năm 1936",
+      "Trải nghiệm chuyến tàu cổ Đà Lạt – Trại Mát lãng mạn",
+      "Uống cà phê trong toa tàu gỗ vintage độc đáo"
+    ],
+    nearbyFood: [
+      "Bánh căn Lệ",
+      "Chè hé Đà Lạt",
+      "Mì Quảng Cung Đình"
+    ]
+  },
+  {
+    id: "cd-su-pham",
+    name: "Trường CĐ Sư Phạm Đà Lạt",
+    category: "kien-truc",
+    lat: 11.9407,
+    lng: 108.4437,
+    image: "image/cd-su-pham.webp",
+    gallery: [
+      "image/cd-su-pham.webp",
+      "image/cd-su-pham-2.webp",
+      "image/cd-su-pham-3.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Cao%20%C4%91%E1%BA%B3ng%20S%C6%B0%20Ph%E1%BA%A1m%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Kiến trúc Pháp cổ với dãy nhà hình vòng cung độc đáo, tiền thân là Trường Trung học Yersin.",
+    desc: "Ngôi trường mang kiến trúc Pháp cổ điển với điểm nhấn là dãy phòng học hình vòng cung uốn lượn theo địa hình đồi, mái ngói đỏ đặc trưng — một trong những công trình giáo dục đẹp nhất Đông Dương.",
+    history: "Được xây dựng từ năm 1927 với tên gọi ban đầu là Trường Trung học Yersin (Grand Lycée Yersin), do kiến trúc sư Moncet thiết kế. Công trình nổi bật với dãy lớp học cong hình vòng cung dài hơn 100m men theo sườn đồi cùng tháp chuông cao vút, được UNESCO công nhận là một trong 1.000 công trình xây dựng độc đáo nhất thế kỷ 20.",
+    price: "Tham quan bên ngoài miễn phí",
+    address: "29 Yersin, Phường Xuân Hương, Đà Lạt",
+    tip: "Ngắm toàn cảnh dãy nhà vòng cung đẹp nhất từ phía đối diện, vào buổi sáng nắng nhẹ.",
+    openingHours: "Tham quan ngoại cảnh cả ngày (khuôn viên trong trường hạn chế giờ vào)",
+    bestTime: "7:00 – 9:00 sáng",
+    suggestedDuration: "30 – 45 phút",
+    idealFor: "Yêu kiến trúc, chụp ảnh cổ điển",
+    highlights: [
+      "Chụp ảnh dãy hành lang vòng cung mang phong cách Pháp cổ",
+      "Ngắm tháp chuông và mái ngói đỏ đặc trưng",
+      "Tìm hiểu lịch sử giáo dục Đà Lạt thời Pháp thuộc"
+    ],
+    nearbyFood: [
+      "Cà phê view đồi gần Hồ Xuân Hương",
+      "Bánh căn khu vực trung tâm"
+    ]
+  },
+  {
+    id: "thac-datanla",
+    name: "Thác Datanla",
+    category: "thac",
+    lat: 11.9106,
+    lng: 108.4453,
+    image: "image/thac-datanla.webp",
+    gallery: [
+      "image/thac-datanla.webp",
+      "image/thac-datanla-2.webp",
+      "image/thac-datanla-3.webp"
+    ],
+    tiktokVideoId: "7600226111255072018",
+    tiktokUrl: "https://www.tiktok.com/@datanlawaterfall/video/7600226111255072018",
+    teaser: "Thác nước trong hẻm núi với máng trượt nổi tiếng.",
+    desc: "Ngọn thác nằm gần trung tâm thành phố, nổi tiếng với hệ thống máng trượt alpine coaster xuyên rừng dài hơn 2.400m và các bậc thác nối tiếp nhau giữa hệ sinh thái rừng nguyên sinh phong phú.",
+    history: "Tên 'Datanla' bắt nguồn từ tiếng K'Ho nghĩa là 'dưới lá'. Thác được khai thác du lịch từ đầu những năm 2000 và hệ thống máng trượt alpine coaster được lắp đặt năm 2009, nhanh chóng trở thành hoạt động cảm giác mạnh được yêu thích nhất.",
+    price: "Vé cổng và các gói máng trượt tính riêng theo dịch vụ",
+    address: "Đèo Prenn, Phường 3",
+    tip: "Nên đặt vé máng trượt vào buổi sáng sớm để tránh xếp hàng.",
+    openingHours: "07:30 – 17:00 hàng ngày",
+    bestTime: "8:00 – 11:00 sáng",
+    suggestedDuration: "2 – 3 giờ",
+    idealFor: "Người thích mạo hiểm, Nhóm bạn trẻ, Dã ngoại",
+    highlights: [
+      "Trải nghiệm Máng trượt Alpine Coaster dài 2.400m xuyên rừng thông",
+      "Đu dây vượt thác Canyoning thử thách bản thân",
+      "Đi cáp treo ngắm thung lũng thác nước cuồn cuộn"
+    ],
+    nearbyFood: [
+      "Thịt nướng ngói Đèo Prenn",
+      "Lẩu nấm rừng",
+      "Cơm lam thịt nướng"
+    ]
+  },
+  {
+    id: "thung-lung-tinh-yeu",
+    name: "Thung Lũng Tình Yêu",
+    category: "nui-doi",
+    lat: 11.9721,
+    lng: 108.4489,
+    image: "image/thung-lung-tinh-yeu.webp",
+    gallery: [
+      "image/thung-lung-tinh-yeu.webp",
+      "image/thung-lung-tinh-yeu-2.webp",
+      "image/thung-lung-tinh-yeu-3.webp"
+    ],
+    tiktokVideoId: "7652957252256632072",
+    tiktokUrl: "https://www.tiktok.com/@dalatdreamer/video/7652957252256632072",
+    teaser: "Đồi thông và vườn hoa gắn với huyền thoại lãng mạn.",
+    desc: "Khu du lịch rộng hơn 274 ha với đồi thông, vườn hoa đa sắc, hồ Đa Thiện thơ mộng và những con đường mòn uốn lượn giữa cảnh quan thiên nhiên lãng mạn bậc nhất Đà Lạt.",
+    history: "Thung Lũng Tình Yêu nguyên thủy là thung lũng hoang sơ mang tên 'Vallée d'Amour' do người Pháp đặt từ thập niên 1930. Năm 1972, tên gọi Thung Lũng Tình Yêu được khôi phục chính thức.",
+    price: "Vé tham quan theo bảng giá niêm yết tại cổng",
+    address: "Phường 8",
+    tip: "Có thể thuê xe đạp đôi hoặc xe điện để dạo quanh khu vực rộng.",
+    openingHours: "07:30 – 17:30 hàng ngày",
+    bestTime: "8:00 – 10:30 sáng hoặc 14:30 – 16:30 chiều",
+    suggestedDuration: "2 – 3 giờ",
+    idealFor: "Cặp đôi hò hẹn, Gia đình, Đi dạo ngắm cảnh",
+    highlights: [
+      "Đi xe điện dạo quanh Hồ Đa Thiện thơ mộng",
+      "Cầu kính 7D Ngàn Thông trải nghiệm độc đáo",
+      "Check-in Công viên kỳ quan thế giới thu nhỏ"
+    ],
+    nearbyFood: [
+      "Lẩu gà lá é Tao Ngộ",
+      "Nướng Chu Đà Lạt",
+      "Ốc nhồi thịt nhồi sả"
+    ]
+  },
+  {
+    id: "doi-che-cau-dat",
+    name: "Đồi chè Cầu Đất",
+    category: "nui-doi",
+    lat: 11.8494,
+    lng: 108.5228,
+    image: "image/doi-che-cau-dat.webp",
+    gallery: [
+      "image/doi-che-cau-dat.webp",
+      "image/doi-che-cau-dat-2.webp",
+      "image/doi-che-cau-dat-3.webp"
+    ],
+    tiktokVideoId: "7650080000225955092",
+    tiktokUrl: "https://www.tiktok.com/@homestaymoctrafarm/video/7650080000225955092",
+    teaser: "Những vạt đồi chè xanh uốn lượn như sóng biển.",
+    desc: "Đồn điền chè hơn trăm năm tuổi với những đồi chè xanh mướt trải dài tít tắp đến tận chân trời, nổi tiếng là điểm săn mây lý tưởng nhất Đà Lạt vào lúc bình minh.",
+    history: "Đồi chè Cầu Đất thành lập năm 1927 bởi người Pháp — một trong những đồn điền chè đầu tiên tại Đông Dương. Giống chè Shan Tuyết cổ thụ trồng ở độ cao trên 1.650m tạo nên hương vị đặc biệt.",
+    price: "Miễn phí tham quan cảnh quan chung",
+    address: "Xã Trạm Hành, cách trung tâm khoảng 20km",
+    tip: "Nên đến trước 7 giờ sáng để có cơ hội ngắm biển mây.",
+    openingHours: "06:00 – 18:00 hàng ngày",
+    bestTime: "5:15 – 6:45 sáng (Săn mây cực phẩm)",
+    suggestedDuration: "2 – 3 giờ",
+    idealFor: "Săn mây, Phượt thủ, Người thích chụp ảnh thiên nhiên",
+    highlights: [
+      "Đón bình minh & Biển mây cuồn cuộn trên đồi chè",
+      "Check-in Tua-bin gió khổng lồ tràng panorama",
+      "Uống Trà Oolong tươi tại quán trà Cầu Đất Farm"
+    ],
+    nearbyFood: [
+      "Bánh mì xíu mại Cầu Đất",
+      "Cà phê săn mây gỗ",
+      "Trà oolong tươi"
+    ]
+  },
+  {
+    id: "nui-langbiang",
+    name: "Núi Langbiang",
+    category: "nui-doi",
+    lat: 12.0433,
+    lng: 108.4342,
+    image: "image/nui-langbiang.webp",
+    gallery: [
+      "image/nui-langbiang.webp",
+      "image/nui-langbiang-2.webp",
+      "image/nui-langbiang-3.webp"
+    ],
+    tiktokVideoId: "7668171551170252040",
+    tiktokUrl: "https://www.tiktok.com/@giadinhbebo47/video/7668171551170252040",
+    teaser: "Nóc nhà cao nguyên Lâm Viên, cao 2.169m.",
+    desc: "Đỉnh núi cao nhất khu vực Đà Lạt, gắn liền với truyền thuyết tình yêu bi thương của chàng K'Lang và nàng H'Biang. Từ đỉnh núi có thể phóng tầm mắt ngắm trọn toàn cảnh thành phố và biển mây.",
+    history: "Núi Langbiang gắn liền với mối tình K'Lang & H'Biang của người dân tộc Lạch & Chil. Năm 1893, bác sĩ Alexandre Yersin đã khám phá cao nguyên Langbiang. Năm 2015, UNESCO công nhận nơi đây là Khu dự trữ sinh quyển thế giới.",
+    price: "Vé cổng khoảng 50.000đ — xe Jeep lên đỉnh tính phí riêng",
+    address: "Thị trấn Lạc Dương, cách trung tâm khoảng 12km",
+    tip: "Kết hợp giao lưu cồng chiêng tại làng Đồng Bào dưới chân núi.",
+    openingHours: "07:00 – 17:30 hàng ngày",
+    bestTime: "8:00 – 11:00 sáng & 14:00 – 16:30 chiều",
+    suggestedDuration: "2 – 4 giờ",
+    idealFor: "Leo núi, Khám phá văn hóa bản địa, Ngắm toàn cảnh",
+    highlights: [
+      "Đi xe Jeep địa hình chinh phục Đồi Radar",
+      "Chiêm ngưỡng dòng Suối Vàng & Suối Bạc từ trên cao",
+      "Giao lưu cồng chiêng Tây Nguyên đêm lửa trại"
+    ],
+    nearbyFood: [
+      "Thịt heo rừng nướng ống tre",
+      "Cơm lam gà nướng Lạc Dương",
+      "Rượu cần Lạch"
+    ]
+  },
+  {
+    id: "thien-vien-truc-lam",
+    name: "Thiền viện Trúc Lâm",
+    category: "tam-linh",
+    lat: 11.9106,
+    lng: 108.4394,
+    image: "image/thien-vien-truc-lam.webp",
+    gallery: [
+      "image/thien-vien-truc-lam.webp",
+      
+    ],
+    tiktokVideoId: "7641209996922998023",
+    tiktokUrl: "https://www.tiktok.com/@quoctrungplus/video/7641209996922998023",
+    teaser: "Chốn thiền tịnh nhìn xuống hồ Tuyền Lâm.",
+    desc: "Một trong những thiền viện lớn nhất Việt Nam thuộc dòng Thiền Trúc Lâm Yên Tử, tọa lạc trên đồi Phụng Hoàng ở độ cao 1.500m, nhìn xuống hồ Tuyền Lâm xanh biếc.",
+    history: "Thiền viện Trúc Lâm được xây dựng từ năm 1993 đến 1994 do Hòa thượng Thích Thanh Từ khôi phục Thiền phái Trúc Lâm Yên Tử của vua Trần Nhân Tông.",
+    price: "Miễn phí",
+    address: "Đồi Phụng Hoàng, cạnh hồ Tuyền Lâm",
+    tip: "Có thể đi cáp treo từ Đồi Robin để ngắm toàn cảnh hồ trước khi vào thiền viện.",
+    openingHours: "05:00 – 21:00 hàng ngày",
+    bestTime: "7:00 – 9:00 sáng (Thanh tịnh & ít đông)",
+    suggestedDuration: "1.5 – 2 giờ",
+    idealFor: "Tâm linh, Du lịch nghỉ dưỡng, Người cao tuổi, Gia đình",
+    highlights: [
+      "Dạo bước giữa vườn hoa quý và đồi thông tĩnh lặng",
+      "Đi cáp treo Đồi Robin sang Thiền Viện ngắm hồ Tuyền Lâm",
+      "Chiêm bái chánh điện Trúc Lâm Yên Tử"
+    ],
+    nearbyFood: [
+      "Cơm chay Thiền Viện",
+      "Lẩu nấm chay",
+      "Cà phê Đồi Robin"
+    ]
+  },
+  {
+    id: "dinh-bao-dai-3",
+    name: "Dinh Bảo Đại (Dinh III)",
+    category: "kien-truc",
+    lat: 11.9364,
+    lng: 108.4364,
+    image: "image/dinh-bao-dai-3.webp",
+    gallery: [
+      "image/dinh-bao-dai-3.webp",
+      
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Dinh%20B%E1%BA%A3o%20%C4%90%E1%BA%A1i%203%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Biệt điện nghỉ dưỡng còn nguyên nội thất hoàng tộc.",
+    desc: "Biệt điện mùa hè của vua Bảo Đại — vị hoàng đế cuối cùng của triều Nguyễn. Công trình vẫn giữ nguyên nội thất mang phong cách châu Âu quý tộc giữa khuôn viên rừng thông xanh mát.",
+    history: "Dinh III xây dựng năm 1933-1938 bởi KTS Paul Veysseyre. Đây là nơi nghỉ dưỡng mùa hè của Vua Bảo Đại và Nam Phương Hoàng hậu.",
+    price: "Vé tham quan khoảng 90.000đ",
+    address: "Số 1 Triệu Việt Vương, Phường Xuân Hương",
+    tip: "Có dịch vụ cho thuê trang phục hoàng gia để chụp ảnh lưu niệm.",
+    openingHours: "07:00 – 17:30 hàng ngày",
+    bestTime: "8:30 – 11:00 sáng",
+    suggestedDuration: "1 – 1.5 giờ",
+    idealFor: "Yêu lịch sử, Gia đình, Tham quan kiến trúc Art Déco",
+    highlights: [
+      "Khám phá phòng làm việc & ngai vàng Vua Bảo Đại",
+      "Hóa trang hoàng tộc chụp ảnh kỷ niệm",
+      "Tản bộ công viên rừng thông Ái Nam"
+    ],
+    nearbyFood: [
+      "Bánh mì xíu mại Triệu Việt Vương",
+      "Bánh ướt lòng gà Long",
+      "Cà phê An Cafe"
+    ]
+  },
+  {
+    id: "dinh-bao-dai-1",
+    name: "Dinh Bảo Đại I",
+    category: "kien-truc",
+    lat: 11.9308,
+    lng: 108.4489,
+    image: "image/dinh-bao-dai-1.webp",
+    gallery: [
+      "image/dinh-bao-dai-1.webp",
+     
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Dinh%201%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Dinh thự Pháp cổ giữa khu vườn rợp bóng thông.",
+    desc: "Dinh thự cổ phong cách kiến trúc Normandie mang vẻ đẹp quý phái của châu Âu đầu thế kỷ 20, tọa lạc trên ngọn đồi cao với khuôn viên rừng thông bao quanh.",
+    history: "Dinh I xây dựng năm 1940 trên nền biệt điện cũ của Paul Doumer. Công trình được trùng tu lớn năm 2014 mở cửa cho du khách.",
+    price: "Vé tham quan khoảng 90.000đ",
+    address: "Số 1 Trần Quang Diệu, Phường Xuân Hương",
+    tip: "Không gian yên tĩnh, ít khách hơn Dinh III, thích hợp để chụp ảnh.",
+    openingHours: "07:00 – 17:30 hàng ngày",
+    bestTime: "9:00 – 11:30 sáng & 14:00 – 16:30 chiều",
+    suggestedDuration: "1.5 – 2 giờ",
+    idealFor: "Nhiếp ảnh Vintage, Bạn trẻ check-in, Yêu không gian yên tĩnh",
+    highlights: [
+      "Hàng tràm cổ thụ dẫn lối vào biệt điện tráng lệ",
+      "Hầm thoát hiểm bí mật dưới thời Ngô Đình Diệm",
+      "Chụp ảnh vườn hoa phong cách Châu Âu quý tộc"
+    ],
+    nearbyFood: [
+      "Nướng cuộn BBQ Trần Quang Diệu",
+      "Lẩu gà lá é 668",
+      "Sữa đậu nành cô Lan"
+    ]
+  },
+  {
+    id: "quang-truong-lam-vien",
+    name: "Quảng trường Lâm Viên",
+    category: "vui-choi",
+    lat: 11.9453,
+    lng: 108.4408,
+    image: "image/quang-truong-lam-vien.webp",
+    gallery: [
+      "image/quang-truong-lam-vien.webp",
+      "image/quang-truong-lam-vien-2.webp",
+      "image/quang-truong-lam-vien-3.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Qu%E1%BA%A3ng%20tr%C6%B0%E1%BB%9Dng%20L%C3%A2m%20Vi%C3%AAn%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Quảng trường trung tâm hình hoa atiso bên hồ Xuân Hương.",
+    desc: "Quảng trường trung tâm thành phố với kiến trúc độc đáo lấy cảm hứng từ hoa dã quỳ và nụ hoa atiso, là nơi tổ chức các sự kiện lớn và Festival Hoa Đà Lạt.",
+    history: "Quảng trường Lâm Viên rộng 72.000m² được xây dựng 2005-2009 do KTS Lê Quốc Khánh thiết kế với khối kính nụ hoa Atiso cao 15m và dã quỳ cao 18m.",
+    price: "Miễn phí",
+    address: "Cạnh hồ Xuân Hương",
+    tip: "Buổi tối có nhạc nước và ánh sáng, rất thích hợp để dạo bộ.",
+    openingHours: "Mở cửa cả ngày (24/7)",
+    bestTime: "16:30 – 21:30 (Ngắm hoàng hôn & nhạc nước đêm)",
+    suggestedDuration: "1 – 2 giờ",
+    idealFor: "Giới trẻ, Gia đình, Trượt patin, Dạo đêm",
+    highlights: [
+      "Check-in Nụ hoa Atiso & Hoa Dã Quỳ khổng lồ bằng kính",
+      "Thưởng thức cà phê bên trong khối nụ hoa Atiso",
+      "Xem biểu diễn trượt patin & trình diễn ánh sáng nhạc nước"
+    ],
+    nearbyFood: [
+      "Bánh tráng nướng Quảng Trường",
+      "Xiên nướng hồ Xuân Hương",
+      "Trà sữa Dã Quỳ"
+    ]
+  },
+  {
+    id: "cho-da-lat",
+    name: "Chợ Đà Lạt & Chợ đêm",
+    category: "vui-choi",
+    lat: 11.9421,
+    lng: 108.4386,
+    image: "image/cho-da-lat.webp",
+    gallery: [
+      "image/cho-da-lat.webp",
+      "image/cho-da-lat-2.webp",
+      "image/cho-da-lat-3.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Ch%E1%BB%A3%20%C4%90%C3%AAm%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Sầm uất ban ngày, rực rỡ ẩm thực khi lên đèn.",
+    desc: "Khu chợ trung tâm là trái tim thương mại và ẩm thực của Đà Lạt. Ban ngày tấp nập rau hoa, đêm xuống biến thành thiên đường ẩm thực đường phố với bánh tráng nướng, bánh căn, sữa đậu nành nóng.",
+    history: "Chợ Đà Lạt xây từ 1958 do KTS Nguyễn Duy Đức thiết kế. Chợ đêm tự phát từ năm 2000 nay trở thành biểu tượng ẩm thực sầm uất nhất thành phố sương mù.",
+    price: "Miễn phí vào chợ — tự chi trả theo món ăn, mua sắm",
+    address: "Đường Nguyễn Thị Minh Khai, trung tâm thành phố",
+    tip: "Ghé sau 18 giờ để cảm nhận trọn không khí chợ đêm.",
+    openingHours: "Chợ ngày 06:00 – 18:00 | Chợ đêm 18:00 – 24:00",
+    bestTime: "18:30 – 21:30 tối",
+    suggestedDuration: "2 – 3 giờ",
+    idealFor: "Tín đồ ẩm thực, Mua sắm quà tặng, Trải nghiệm đêm Đà Lạt",
+    highlights: [
+      "Cầu Hong Kong check-in góc ảnh huyền thoại",
+      "Oanh tạc thiên đường ẩm thực đường phố sầm uất",
+      "Mua mứt dâu, trà atiso & áo len làm quà"
+    ],
+    nearbyFood: [
+      "Bánh tráng nướng 'Pizza Đà Lạt'",
+      "Sữa đậu nành nóng & Bánh su kem",
+      "Bánh mì xíu mại Chợ Đêm",
+      "Dâu tây lắc spicy"
+    ]
+  },
+  {
+    id: "nha-tho-domaine",
+    name: "Nhà thờ Domaine de Marie",
+    category: "kien-truc",
+    lat: 11.9358,
+    lng: 108.4331,
+    image: "image/nha-tho-domaine.webp",
+    gallery: [
+      "image/nha-tho-domaine.webp"
+    
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Nh%C3%A0%20th%E1%BB%9D%20Domaine%20de%20Marie%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Thánh đường màu hồng phấn trên đồi thông.",
+    desc: "Nhà thờ và tu viện mang sắc hồng phấn đặc trưng, kết hợp kiến trúc Pháp với đường nét nhà rông Tây Nguyên, tọa lạc thanh bình trên ngọn đồi nhìn xuống thung lũng.",
+    history: "Xây dựng 1940-1942 bởi Linh mục Boutary. Nơi đây nuôi dạy trẻ em mồ côi và làm mứt truyền thống gây quỹ từ thiện.",
+    price: "Miễn phí",
+    address: "Số 1 Ngô Quyền, Phường 6",
+    tip: "Đây vẫn là tu viện đang hoạt động, nên giữ trật tự khi tham quan.",
+    openingHours: "07:00 – 17:00 hàng ngày",
+    bestTime: "8:00 – 10:30 sáng (Nắng ấm tôn màu hồng)",
+    suggestedDuration: "45 phút – 1.5 giờ",
+    idealFor: "Bạn trẻ check-in, Yêu kiến trúc, Gia đình",
+    highlights: [
+      "Sắc hồng pastel ngọt ngào của ngôi thánh đường",
+      "Khu vườn hoa hải đường & cẩm tú cầu rực rỡ",
+      "Mua quà lưu niệm thêu tay ủng hộ trẻ em mồ côi"
+    ],
+    nearbyFood: [
+      "Bánh căn Ngô Quyền",
+      "Bánh ướt lòng gà Trang",
+      "Chè Thái Bà Triệu"
+    ]
+  },
+  {
+    id: "thac-prenn",
+    name: "Thác Prenn",
+    category: "thac",
+    lat: 11.8858,
+    lng: 108.4453,
+    image: "image/thac-prenn.webp",
+    gallery: [
+      "image/thac-prenn.webp",
+      "image/thac-prenn-2.webp",
+      "image/thac-prenn-3.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Th%C3%A1c%20Prenn%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Lối đi xuyên qua màn nước ngay cửa ngõ thành phố.",
+    desc: "Thác nước cao khoảng 10m nằm ngay cửa ngõ vào Đà Lạt trên đèo Prenn, có lối đi bộ độc đáo xuyên qua phía sau màn nước rơi, mang đến trải nghiệm gần gũi với thiên nhiên.",
+    history: "Thác Prenn có tên từ tiếng Chăm nghĩa là vùng đất giao thoa. Khai thác du lịch từ những năm 1960 với lối đi sau màn nước được gia cố an toàn năm 2005.",
+    price: "Vé tham quan khoảng 60.000đ",
+    address: "Đèo Prenn, Quốc lộ 20",
+    tip: "Mang theo áo mưa mỏng nếu muốn đi xuyên qua chân thác.",
+    openingHours: "07:30 – 17:00 hàng ngày",
+    bestTime: "8:30 – 11:00 sáng",
+    suggestedDuration: "1.5 – 2 giờ",
+    idealFor: "Du lịch gia đình, Đoàn khách, Trải nghiệm thiên nhiên",
+    highlights: [
+      "Đi bộ xuyên qua phía sau màn nước rơi ngắm dòng thác",
+      "Trải nghiệm cưỡi voi & chèo thuyền phao",
+      "Tham quan đền Hùng trên đỉnh núi Phượng Hoàng"
+    ],
+    nearbyFood: [
+      "Cơm lam gà nướng Prenn",
+      "Lẩu cá tầm đèo Prenn",
+      "Rượu dâu rừng"
+    ]
+  },
+  {
+    id: "ho-than-tho",
+    name: "Hồ Than Thở",
+    category: "ho",
+    lat: 11.9522,
+    lng: 108.4642,
+    image: "image/ho-than-tho.webp",
+    gallery: [
+      "image/ho-than-tho.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=H%E1%BB%93%20Than%20Th%E1%BB%9F%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Mặt hồ trầm mặc giữa rừng thông, ít ồn ào hơn.",
+    desc: "Hồ nước nhỏ yên bình giữa rừng thông, mang không khí hoài cổ và u buồn. Nổi tiếng với những câu chuyện tình bi thương trong dân gian Đà Lạt.",
+    history: "Tên gốc Pháp là Lac des Soupirs đắp đập từ năm 1917, gắn liền câu chuyện tình bi thương của Hoàng Tùng & Mai Nương.",
+    price: "Vé tham quan khoảng 20.000đ",
+    address: "Phường 12",
+    tip: "Phù hợp cho ai muốn tìm không gian yên tĩnh, ít đông đúc.",
+    openingHours: "07:30 – 17:00 hàng ngày",
+    bestTime: "15:00 – 17:00 chiều (Không khí trầm mặc lãng mạn)",
+    suggestedDuration: "1 – 1.5 giờ",
+    idealFor: "Tìm chốn tĩnh lặng, Cặp đôi thích không gian yên bình",
+    highlights: [
+      "Dạo bước đồi thông Đồi Thủy Tiên hoài cổ",
+      "Lắng nghe huyền thoại tình yêu tình sử Hoàng Tùng & Mai Nương",
+      "Cưỡi ngựa dạo quanh thảm cỏ xanh ven hồ"
+    ],
+    nearbyFood: [
+      "Bánh mì xíu mại Phan Đình Phùng",
+      "Lẩu bò Lạc Duyên",
+      "Sữa chua phô mai"
+    ]
+  },
+  {
+    id: "duong-ham-dat-set",
+    name: "Đường hầm Điêu khắc Đất sét",
+    category: "vui-choi",
+    lat: 11.9494,
+    lng: 108.4494,
+    image: "image/duong-ham-dat-set.webp",
+    gallery: [
+      "image/duong-ham-dat-set.webp"
+     
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=%C4%90%C6%B0%E1%BB%9Dng%20h%E1%BA%A7m%20%C4%90%E1%BA%A5t%20S%C3%A9t%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Công trình nghệ thuật đất đỏ bazan độc đáo.",
+    desc: "Công trình nghệ thuật độc nhất vô nhị tái hiện kiến trúc và văn hóa Việt Nam bằng đất sét đỏ bazan Tây Nguyên. Đường hầm dài hơn 1.200m với hàng trăm tác phẩm điêu khắc tinh xảo.",
+    history: "Xây dựng bởi nghệ nhân Trịnh Bá Dũng từ năm 2010. Đã dùng hơn 150 tấn đất sét đỏ bazan và đạt Kỷ lục Đường hầm điêu khắc dài nhất Việt Nam.",
+    price: "Vé tham quan khoảng 90.000đ",
+    address: "Gần hồ Tuyền Lâm, Phường 4",
+    tip: "Nên đi giày thoải mái vì đường hầm khá dài và nhiều bậc lên xuống.",
+    openingHours: "07:00 – 17:00 hàng ngày",
+    bestTime: "8:00 – 10:00 sáng (Nắng nhẹ chụp Hồ Vô Cực)",
+    suggestedDuration: "2 – 2.5 giờ",
+    idealFor: "Bạn trẻ check-in, Nhiếp ảnh, Đoàn du lịch",
+    highlights: [
+      "Check-in Hồ Vô Cực với hai tượng đầu người tình nhân",
+      "Chiêm ngưỡng mô hình Nhà ga, Nhà thờ bằng đất sét bazan",
+      "Khám phá ngôi nhà đất sét rộng 90m² lập kỷ lục Việt Nam"
+    ],
+    nearbyFood: [
+      "Cơm lam gà nướng Hồ Tuyền Lâm",
+      "Cà phê Tuyền Lâm view hồ",
+      "Lẩu dê Tay Cầm"
+    ]
+  },
+  {
+    id: "chua-linh-phuoc",
+    name: "Chùa Linh Phước",
+    category: "tam-linh",
+    lat: 11.8994,
+    lng: 108.4964,
+    image: "image/chua-linh-phuoc.webp",
+    gallery: [
+      "image/chua-linh-phuoc.webp"
+      
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Ch%C3%B9a%20Linh%20Ph%C6%B0%E1%BB%9Bc%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Ngôi chùa ghép từ mảnh sành sứ với tháp chuông cao nhất nước.",
+    desc: "Ngôi chùa nổi tiếng với kiến trúc khảm ghép từ hàng triệu mảnh sành sứ và ve chai, sở hữu tháp chuông Linh Tự cao 37m — cao bậc nhất Việt Nam, cùng tượng Quan Âm kết từ hơn 600.000 bông hoa bất tử.",
+    history: "Khởi công 1949 và trùng tu nghệ thuật khảm sành sứ Mosaic từ năm 1990. Ngôi chùa nắm giữ tới 18 kỷ lục Việt Nam.",
+    price: "Miễn phí",
+    address: "120 Tự Phước, Trại Mát, cách trung tâm khoảng 8km",
+    tip: "Kết hợp đi tàu hỏa từ Ga Đà Lạt đến Trại Mát cho trọn trải nghiệm.",
+    openingHours: "07:00 – 17:00 hàng ngày",
+    bestTime: "9:00 – 11:30 sáng & 13:30 – 15:30 chiều",
+    suggestedDuration: "1.5 – 2 giờ",
+    idealFor: "Yêu văn hóa tâm linh, Chiêm bái, Người thích nghệ thuật Mosaic",
+    highlights: [
+      "Chiêm ngưỡng Rồng dài 49m khảm từ 12.000 vỏ chai bia",
+      "Chiêm bái Tượng Phật Quan Âm kết từ 600.000 bông hoa bất tử",
+      "Đại Hồng Chung nặng 8,5 tấn & Tháp chuông 37m kỷ lục"
+    ],
+    nearbyFood: [
+      "Bánh căn Trại Mát",
+      "Sữa đậu nành Trại Mát",
+      "Lẩu gà lá é Trại Mát"
+    ]
+  },
+  {
+    id: "vuon-hoa-thanh-pho",
+    name: "Vườn hoa Thành phố",
+    category: "vuon-hoa",
+    lat: 11.9463,
+    lng: 108.4437,
+    image: "image/vuon-hoa-thanh-pho.webp",
+    gallery: [
+      "image/vuon-hoa-thanh-pho.webp",
+      "image/vuon-hoa-thanh-pho-2.webp",
+      "image/vuon-hoa-thanh-pho-3.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=V%C6%B0%E1%BB%9Dn%20hoa%20Th%C3%A0nh%20ph%E1%BB%91%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Công viên hoa quy mô lớn, nơi Festival Hoa diễn ra.",
+    desc: "Công viên trưng bày hàng trăm loài hoa đặc trưng xứ lạnh theo mùa, rực rỡ sắc màu quanh năm. Đây là địa điểm chính diễn ra Festival Hoa Đà Lạt — sự kiện du lịch quan trọng nhất của thành phố.",
+    history: "Quy hoạch năm 1966 rộng 7.000m² ven hồ Xuân Hương. Nơi diễn ra Festival Hoa định kỳ thu hút đông đảo du khách trong và ngoài nước.",
+    price: "Vé tham quan khoảng 60.000đ",
+    address: "Số 2 Phù Đổng Thiên Vương, cạnh hồ Xuân Hương",
+    tip: "Đẹp nhất vào dịp Festival Hoa thường tổ chức tháng 12.",
+    openingHours: "07:00 – 18:00 hàng ngày",
+    bestTime: "7:30 – 10:00 sáng (Hoa tươi nở rực rỡ)",
+    suggestedDuration: "1.5 – 2.5 giờ",
+    idealFor: "Người yêu hoa, Gia đình có trẻ nhỏ, Người cao tuổi",
+    highlights: [
+      "Chiêm ngưỡng hơn 300 loài hoa quý quy tụ từ khắp thế giới",
+      "Khu vườn xương rồng khổng lồ & vườn phong lan rực rỡ",
+      "Cổng hoa hình trái tim check-in biểu tượng Festival Hoa"
+    ],
+    nearbyFood: [
+      "Bánh bèo số 4 Bà Hường",
+      "Chè Thái Nguyễn Văn Trỗi",
+      "Nem nướng Hùng Vương"
+    ]
+  },
+  {
+    id: "doi-robin",
+    name: "Đồi Robin",
+    category: "nui-doi",
+    lat: 11.9394,
+    lng: 108.4519,
+    image: "image/doi-robin.webp",
+    gallery: [
+      "image/doi-robin.webp"
+    
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=%C4%90%E1%BB%93i%20Robin%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Điểm ngắm trọn hồ Tuyền Lâm từ trên cao bằng cáp treo.",
+    desc: "Ngọn đồi ở độ cao 1.517m với tầm nhìn panorama bao quát hồ Tuyền Lâm, rừng thông và dãy núi xa xa. Nơi đây kết nối với Thiền viện Trúc Lâm bằng hệ thống cáp treo hiện đại.",
+    history: "Đồi Robin được mở hệ thống cáp treo năm 2003 dài 2.267m — một trong những tuyến cáp dài nhất Việt Nam lúc bấy giờ.",
+    price: "Vé cáp treo khoảng 100.000đ/khứ hồi",
+    address: "Cạnh hồ Tuyền Lâm",
+    tip: "Đi cáp treo vào sáng sớm để tránh nắng gắt và đông khách.",
+    openingHours: "07:30 – 17:00 hàng ngày",
+    bestTime: "8:00 – 10:00 sáng & 15:30 – 17:00 chiều",
+    suggestedDuration: "1 – 1.5 giờ",
+    idealFor: "Du khách đi cáp treo, Ngắm toàn cảnh thành phố",
+    highlights: [
+      "Tầm nhìn Panorama 360 độ toàn cảnh thung lũng Đà Lạt",
+      "Tuyến cáp treo dài 2.267m bay qua rừng thông đến Trúc Lâm",
+      "Thưởng thức Lẩu rau Leguda buffet rau sạch tươi ngon trên đỉnh đồi"
+    ],
+    nearbyFood: [
+      "Lẩu rau Leguda chuẩn Đà Lạt",
+      "Cáp treo Robin Cafe",
+      "Bánh tráng nướng Đèo Prenn"
+    ]
+  },
+  {
+    id: "thac-pongour",
+    name: "Thác Pongour",
+    category: "thac",
+    lat: 11.7867,
+    lng: 108.2419,
+    image: "image/thac-pongour.webp",
+    gallery: [
+      "image/thac-pongour.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Th%C3%A1c%20Pongour%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "\"Nam thiên đệ nhất thác\" giữa rừng nguyên sinh.",
+    desc: "Ngọn thác hùng vĩ nhất khu vực Đà Lạt với chiều cao khoảng 40m và chiều rộng hơn 100m vào mùa mưa, đổ xuống qua 7 bậc đá xếp tầng giữa khung cảnh rừng nguyên sinh hoang sơ.",
+    history: "Thác 7 tầng có tên 'Pongour' từ tiếng K'Ho nghĩa là bốn sừng. Vua Bảo Đại đã từng ban phong là Nam Thiên Đệ Nhất Thác.",
+    price: "Người lớn khoảng 20.000đ — trẻ em khoảng 10.000đ",
+    address: "Huyện Đức Trọng, cách trung tâm khoảng 50km",
+    tip: "Cần nhiều thời gian di chuyển, nên kết hợp trong lịch trình trọn ngày.",
+    openingHours: "07:30 – 17:00 hàng ngày",
+    bestTime: "8:30 – 11:30 sáng (Mùa mưa tháng 7-11 thác đổ đẹp nhất)",
+    suggestedDuration: "2 – 3.5 giờ",
+    idealFor: "Phượt thủ, Nhiếp ảnh gia phong cảnh, Khám phá thiên nhiên kỳ vĩ",
+    highlights: [
+      "Mặt thác 7 tầng trải rộng 100m đổ bọt tuyết trắng xóa",
+      "Tòa thiên nhiên 'Nam thiên đệ nhất thác' Vua Bảo Đại ban tặng",
+      "Lễ hội văn hóa Pongour rằm tháng Giêng âm lịch hàng năm"
+    ],
+    nearbyFood: [
+      "Cơm lam thịt nướng Đức Trọng",
+      "Cá suối chiên giòn",
+      "Lẩu cá tầm Nam Ban"
+    ]
+  },
+  {
+    id: "lang-hoa-thai-phien",
+    name: "Làng hoa Thái Phiên",
+    category: "vuon-hoa",
+    lat: 11.9186,
+    lng: 108.4592,
+    image: "image/lang-hoa-thai-phien.webp",
+    gallery: [
+      "image/lang-hoa-thai-phien.webp"
+     
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=L%C3%A0ng%20hoa%20Th%C3%A1i%20Phi%C3%AAn%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Thung lũng nhà kính lung linh ánh đèn khi trời tối.",
+    desc: "Vùng trồng hoa quy mô lớn nhất Đà Lạt với hàng trăm nhà kính liền kề, tạo nên khung cảnh lung linh ánh đèn huyền ảo về đêm, đặc biệt đẹp vào những hôm trời se lạnh và nhiều sương.",
+    history: "Khu vực trồng hoa truyền thống lâu đời từ thập niên 1990 áp dụng công nghệ nhà kính, trở thành kinh đô ánh sáng nhà kính nổi tiếng.",
+    price: "Miễn phí",
+    address: "Phường 12",
+    tip: "Nên ghé vào buổi tối để ngắm trọn khung cảnh đèn trong nhà kính.",
+    openingHours: "Mở cửa cả ngày (Xem đèn lung linh nhất từ 18:00)",
+    bestTime: "18:00 – 20:30 tối",
+    suggestedDuration: "1 – 1.5 giờ",
+    idealFor: "Nhiếp ảnh đêm, Bạn trẻ check-in kinh đô ánh sáng nhà kính",
+    highlights: [
+      "Ngắm thung lũng ánh sáng lấp lánh như ngàn sao khi đêm xuống",
+      "Check-in quán cà phê Hoàng Hôn Chiều / Xóm Lèo view nhà kính",
+      "Tham quan làng nghề trồng hoa cúc & ly lâu đời nhất Đà Lạt"
+    ],
+    nearbyFood: [
+      "Lẩu gà lá é Xóm Lèo",
+      "Cà phê Thung Lũng Đèn",
+      "Bánh căn Hùng Vương"
+    ]
+  },
+  {
+    id: "vuon-anh-sang-lumiere",
+    name: "Vườn Ánh sáng Lumiere",
+    category: "vui-choi",
+    lat: 11.974,
+    lng: 108.4501,
+    image: "image/vuon-anh-sang-lumiere.webp",
+    gallery: [
+      "image/vuon-anh-sang-lumiere.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=V%C6%B0%E1%BB%9Dn%20%C3%81nh%20s%C3%A1ng%20Lumiere%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Không gian trình chiếu ánh sáng nghệ thuật hiện đại.",
+    desc: "Không gian triển lãm ánh sáng nghệ thuật với nhiều phòng trưng bày theo chủ đề khác nhau, ứng dụng công nghệ LED, laser và mapping 3D để tạo trải nghiệm thị giác sống động.",
+    history: "Khai trương 2019, là trung tâm nghệ thuật ánh sáng công nghệ cao đầu tiên tại Đà Lạt rộng 5.000m².",
+    price: "Vé tham quan khoảng 150.000–200.000đ",
+    address: "272 Mai Anh Đào, Phường 8",
+    tip: "Dành ít nhất 2 tiếng để tham quan hết các phòng trưng bày.",
+    openingHours: "08:00 – 21:30 hàng ngày",
+    bestTime: "14:00 – 20:00 (Trải nghiệm công nghệ ánh sáng)",
+    suggestedDuration: "1.5 – 2.5 giờ",
+    idealFor: "Gia đình có trẻ nhỏ, Bạn trẻ mê chụp ảnh Futuristic / Virtual",
+    highlights: [
+      "Phòng chiếu 3D Mapping & Vũ trụ ngân hà huyền ảo",
+      "Đường hầm ánh sáng Laser & Ngàn vì sao tương tác",
+      "9 phòng triển lãm nghệ thuật thị giác công nghệ cao"
+    ],
+    nearbyFood: [
+      "Lẩu nấm Bách Thảo",
+      "Bánh bao thọ phát",
+      "Trà sữa Matcha Lumiere"
+    ]
+  },
+  {
+    id: "thac-voi",
+    name: "Thác Voi",
+    category: "thac",
+    lat: 11.8286,
+    lng: 108.3283,
+    image: "image/thac-voi.webp",
+    gallery: [
+      "image/thac-voi.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=Th%C3%A1c%20Voi%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Ngọn thác hùng vĩ cao 30m gắn liền truyền thuyết tình yêu bi tráng.",
+    desc: "Một trong những thác nước hùng vĩ nhất cao nguyên Lâm Viên với dòng nước đổ ầm ào từ độ cao khoảng 30m xuống hồ đá bên dưới, bao quanh bởi rừng nguyên sinh và hệ thống hang động tự nhiên có thể len lỏi vào tận sau màn nước.",
+    history: "Tên gọi Thác Voi gắn với truyền thuyết về đôi trai gái người K'Ho yêu nhau nhưng bị ngăn cấm; chàng trai hóa thành ngọn núi, cô gái hóa đá chờ đợi, còn đàn voi của buôn làng đi tìm chủ đau buồn hóa đá ngay chân thác — tạo thành các mỏm đá voi phủ rêu xanh vẫn còn hiện diện đến ngày nay. Thác được đưa vào khai thác du lịch từ thập niên 1990 và trở thành điểm dã ngoại quen thuộc của du khách khi ghé huyện Lâm Hà.",
+    price: "Vé tham quan khoảng 20.000–30.000đ/người",
+    address: "Thị trấn Nam Ban, huyện Lâm Hà, cách trung tâm khoảng 30km",
+    tip: "Mang giày chống trượt vì đường đá xuống chân thác khá trơn, nên đi vào mùa khô để nước trong hơn.",
+    openingHours: "07:00 – 17:00 hàng ngày",
+    bestTime: "8:00 – 11:00 sáng, tránh giờ nắng gắt buổi trưa",
+    suggestedDuration: "1.5 – 2 giờ",
+    idealFor: "Nhóm bạn thích trekking nhẹ, Gia đình, Yêu thiên nhiên hoang sơ",
+    highlights: [
+      "Len lỏi vào hang động tự nhiên phía sau màn nước thác đổ",
+      "Chụp ảnh cùng các mỏm đá hình voi phủ rêu xanh huyền thoại",
+      "Dã ngoại giữa rừng nguyên sinh mát rượi quanh năm"
+    ],
+    nearbyFood: [
+      "Bắp nướng & khoai lang nướng bản địa",
+      "Cà phê vợt Nam Ban",
+      "Bơ sáp Lâm Hà theo mùa"
+    ]
+  },
+  {
+    id: "lang-cu-lan",
+    name: "Làng Cù Lần",
+    category: "vui-choi",
+    lat: 12.0203,
+    lng: 108.4681,
+    image: "image/lang-cu-lan.webp",
+    gallery: [
+      "image/lang-cu-lan.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=L%C3%A0ng%20C%C3%B9%20L%E1%BA%A7n%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Bản làng mộc mạc giữa thung lũng rừng thông, gần gũi muông thú.",
+    desc: "Khu du lịch sinh thái tái hiện không gian một bản làng vùng cao mộc mạc nằm lọt thỏm giữa thung lũng rừng thông nguyên sinh, với những mái nhà tranh, cầu treo, xe trâu, và khu vực cho du khách tương tác gần gũi với các loài thú nuôi bán hoang dã.",
+    history: "Tên gọi 'Cù Lần' vừa lấy cảm hứng từ loài thú Cu-li (cù lần) quý hiếm từng sinh sống trong khu rừng này, vừa mang hàm ý hài hước, mộc mạc, 'chậm rãi tách biệt phố thị' mà nhà đầu tư muốn xây dựng làm điểm nhấn thương hiệu khi khu du lịch hình thành đầu những năm 2010 trên nền thung lũng Suối Vàng thuộc địa phận xã Lát, huyện Lạc Dương.",
+    price: "Vé vào cổng khoảng 150.000–200.000đ (bao gồm xe điện đưa đón)",
+    address: "Xã Lát, huyện Lạc Dương, cách trung tâm khoảng 22km",
+    tip: "Nên đi cả ngày, mang theo áo ấm vì thung lũng khá lạnh về chiều.",
+    openingHours: "07:30 – 17:00 hàng ngày",
+    bestTime: "9:00 – 15:00",
+    suggestedDuration: "3 – 4 giờ",
+    idealFor: "Gia đình có trẻ nhỏ, Nhóm bạn dã ngoại, Team building",
+    highlights: [
+      "Băng qua cầu treo dây văng bắc ngang thung lũng rừng thông",
+      "Cho thú bán hoang dã ăn tại khu bảo tồn nhỏ trong làng",
+      "Trải nghiệm nhà sàn, xe trâu và ẩm thực gà nướng bản địa"
+    ],
+    nearbyFood: [
+      "Gà nướng cơm lam Cù Lần",
+      "Rượu cần Tây Nguyên",
+      "Bắp nếp nướng mỡ hành"
+    ]
+  },
+  {
+    id: "cau-dat-farm",
+    name: "Cầu Đất Farm",
+    category: "vui-choi",
+    lat: 11.8494,
+    lng: 108.5228,
+    image: "image/cau-dat-farm.webp",
+    gallery: [
+      "image/cau-dat-farm.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=C%E1%BA%A7u%20%C4%90%E1%BA%A5t%20Farm%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Nông trại đồi chè, dâu tây & cà phê Arabica giữa biển mây Cầu Đất.",
+    desc: "Nông trại nông nghiệp công nghệ cao nằm trên vùng đất Cầu Đất trứ danh, kết hợp giữa những vườn dâu tây, vườn hồng treo gió, đồi chè bát ngát và các trạm chụp ảnh view biển mây — vừa tham quan sản xuất nông nghiệp vừa check-in sống ảo.",
+    history: "Vùng Cầu Đất vốn là nơi người Pháp lập đồn điền chè quy mô lớn từ năm 1927 (Sở Trà Cầu Đất) do độ cao trên 1.600m và khí hậu quanh năm mát lạnh lý tưởng cho cây chè và cà phê Arabica. Từ nền tảng nông nghiệp lâu đời đó, các nông trại hiện đại như Cầu Đất Farm dần hình thành từ giữa những năm 2010, ứng dụng mô hình du lịch canh nông kết hợp trải nghiệm cho du khách, giúp vùng đất chè trăm năm tuổi trở thành điểm đến quen thuộc trên bản đồ check-in Đà Lạt.",
+    price: "Vé tham quan khoảng 50.000–100.000đ, một số khu vực miễn phí",
+    address: "Thôn Cầu Đất, xã Xuân Trường, cách trung tâm khoảng 22km",
+    tip: "Đi sớm để săn mây trước 8h sáng, mang theo giỏ nếu muốn tự tay hái dâu.",
+    openingHours: "07:00 – 17:30 hàng ngày",
+    bestTime: "5:30 – 8:00 sáng (săn mây) hoặc 14:00 – 16:00 chiều",
+    suggestedDuration: "2 – 3 giờ",
+    idealFor: "Gia đình, Cặp đôi, Yêu nông nghiệp xanh & nhiếp ảnh",
+    highlights: [
+      "Tự tay hái dâu tây tại vườn và thưởng thức tại chỗ",
+      "Check-in đồi chè xanh mướt trải dài tít tắp trong sương sớm",
+      "Tham quan quy trình rang xay cà phê Arabica Cầu Đất"
+    ],
+    nearbyFood: [
+      "Dâu tây tươi & mứt dâu tại vườn",
+      "Cà phê Arabica Cầu Đất nguyên chất",
+      "Bánh tráng nướng Trại Mát"
+    ]
+  },
+  {
+    id: "lang-hoa-van-thanh",
+    name: "Làng hoa Vạn Thành",
+    category: "vuon-hoa",
+    lat: 11.9536,
+    lng: 108.4297,
+    image: "image/lang-hoa-van-thanh.webp",
+    gallery: [
+      "image/lang-hoa-van-thanh.webp"
+    ],
+    tiktokUrl: "https://www.tiktok.com/search?q=L%C3%A0ng%20hoa%20V%E1%BA%A1n%20Th%C3%A0nh%20%C4%90%C3%A0%20L%E1%BA%A1t",
+    teaser: "Thủ phủ hoa hồng lâu đời nhất Đà Lạt với hàng trăm giống hồng quý.",
+    desc: "Làng nghề trồng hoa hồng truyền thống lớn nhất Đà Lạt, nơi những vườn hồng nối tiếp nhau trải dài ven sườn đồi với hàng trăm giống hồng trong và ngoài nước, xen kẽ là các nhà kính hoa cúc, cẩm chướng rực rỡ quanh năm.",
+    history: "Làng hoa Vạn Thành hình thành từ giữa thế kỷ 20 khi những hộ nông dân đầu tiên di cư từ miền Bắc và miền Trung mang theo giống hồng vào canh tác trên vùng đất đỏ bazan màu mỡ ven suối Cam Ly. Trải qua nhiều thế hệ, Vạn Thành dần trở thành vùng chuyên canh hoa hồng quy mô lớn nhất Đà Lạt, cung cấp hoa cắt cành cho thị trường cả nước và là nguồn cảm hứng cho danh xưng 'Thành phố ngàn hoa'.",
+    price: "Miễn phí ngắm cảnh — một số vườn thu phí tham quan chụp ảnh khoảng 20.000–30.000đ",
+    address: "Phường 5, ven suối Cam Ly, cách trung tâm khoảng 4km",
+    tip: "Hỏi xin phép chủ vườn trước khi vào chụp ảnh, tránh giẫm lên luống hoa.",
+    openingHours: "06:00 – 17:30 hàng ngày",
+    bestTime: "7:00 – 9:00 sáng ánh nắng dịu, hoa còn đọng sương",
+    suggestedDuration: "1 – 1.5 giờ",
+    idealFor: "Yêu hoa, Nhiếp ảnh, Gia đình dạo bộ nhẹ nhàng",
+    highlights: [
+      "Dạo giữa những luống hồng trăm giống rực rỡ sắc màu",
+      "Tham quan nhà kính hoa cúc, cẩm chướng công nghệ cao",
+      "Trò chuyện cùng nông dân về nghề trồng hoa truyền thống"
+    ],
+    nearbyFood: [
+      "Sữa đậu nành nóng Cam Ly",
+      "Bánh căn xóm hoa",
+      "Trà atiso tươi"
+    ]
+  }
+];
+
+// LỊCH TRÌNH DU LỊCH GỢI Ý MẪU (PRESET ITINERARIES)
+const ITINERARIES = [
+  {
+    id: "san-may-thien-nhien",
+    title: "Lịch Trình 1: Săn Mây & Khám Phá Thiên Nhiên (2N1Đ)",
+    badge: "🌄 Hot Nhất 2026",
+    desc: "Dành cho những du khách mê mây trời, không khí trong lành & cảnh quan đồi núi thiên nhiên Đà Lạt.",
+    stops: ["doi-che-cau-dat", "ga-da-lat", "ho-tuyen-lam", "thien-vien-truc-lam", "quang-truong-lam-vien", "cho-da-lat"],
+    timeline: [
+      { time: "05:15", title: "Săn mây bình minh Đồi Chè Cầu Đất", note: "Đón bình minh rực rỡ và biển mây cuồn cuộn" },
+      { time: "09:00", title: "Check-in Ga Đà Lạt & Uống cà phê toa tàu", note: "Chụp ảnh hoài cổ cùng đầu máy hơi nước 1936" },
+      { time: "14:00", title: "Dạo hồ Tuyền Lâm & Đi cáp treo Đồi Robin sang Thiền Viện", note: "Thư giãn chèo SUP ngắm rừng thông" },
+      { time: "18:30", title: "Thưởng thức ẩm thực Chợ Đêm & Quảng Trường Lâm Viên", note: "Bánh tráng nướng, sữa đậu nành nóng" }
+    ]
+  },
+  {
+    id: "van-hoa-dieu-khac",
+    title: "Lịch Trình 2: Di Tế & Kiến Trúc Văn Hóa Cổ (3N2Đ)",
+    badge: "🏰 Văn Hóa & Di Sản",
+    desc: "Hành trình khám phá các công trình di tích Pháp cổ, biệt điện hoàng gia và các ngôi chùa kỷ lục.",
+    stops: ["nha-tho-con-ga", "dinh-bao-dai-3", "nha-tho-domaine", "chua-linh-phuoc", "duong-ham-dat-set", "cho-da-lat"],
+    timeline: [
+      { time: "Ngày 1 - 08:30", title: "Nhà thờ Con Gà & Biệt điện Dinh Bảo Đại III", note: "Tham quan kiến trúc Roman & Hoàng gia" },
+      { time: "Ngày 1 - 14:30", title: "Nhà thờ hồng Domaine de Marie", note: "Chụp ảnh phong cách Châu Âu ngọt ngào" },
+      { time: "Ngày 2 - 09:00", title: "Trải nghiệm tàu hỏa cổ ghé Chùa Linh Phước (Chùa Ve Chai)", note: "Chiêm ngưỡng tháp chuông 37m & Rồng khảm 12.000 vỏ chai" },
+      { time: "Ngày 2 - 14:00", title: "Check-in Đường hầm Đất Sét & Hồ Vô Cực", note: "Công trình nghệ thuật đất bazan kỷ lục" }
+    ]
+  },
+  {
+    id: "checkin-lang-man",
+    title: "Lịch Trình 3: Trải Nghiệm Lãng Mạn & Ẩm Thực Đà Lạt",
+    badge: "💖 Dành Cho Cặp Đôi",
+    desc: "Lịch trình thư giãn, ngắm hoa, đi dạo hồ Xuân Hương và thưởng thức đặc sản xứ sương mù.",
+    stops: ["ho-xuan-huong", "vuon-hoa-thanh-pho", "thung-lung-tinh-yeu", "lang-hoa-thai-phien", "vuon-anh-sang-lumiere"],
+    timeline: [
+      { time: "07:30", title: "Đạp xe dạo Hồ Xuân Hương & Ăn bánh mì xíu mại", note: "Hít thở không khí se lạnh buổi sáng" },
+      { time: "09:30", title: "Tham quan Vườn Hoa Thành Phố & Thung Lũng Tình Yêu", note: "Chiêm ngưỡng ngàn hoa khoe sắc" },
+      { time: "15:00", title: "Trải nghiệm triển lãm Vườn Ánh Sáng Lumiere", note: "Không gian 3D mapping lung linh" },
+      { time: "18:30", title: "Ngắm kinh đô nhà kính Làng hoa Thái Phiên về đêm", note: "Thưởng thức lẩu gà lá é Xóm Lèo" }
+    ]
+  },
+  {
+    id: "hoang-da-ngoai-ngoai-o",
+    title: "Lịch Trình 4: Về Với Thiên Nhiên Hoang Sơ Ngoại Ô (1 Ngày)",
+    badge: "🌿 Trekking & Nông Trại",
+    desc: "Rời trung tâm, khám phá thác nước hùng vĩ, bản làng mộc mạc và nông trại chè – dâu vùng ngoại ô Đà Lạt.",
+    stops: ["thac-voi", "lang-cu-lan", "cau-dat-farm"],
+    timeline: [
+      { time: "07:00", title: "Chinh phục Thác Voi & khám phá hang động sau màn nước", note: "Mang giày chống trượt, đường đá khá trơn" },
+      { time: "10:30", title: "Băng cầu treo khám phá Làng Cù Lần", note: "Cho thú bán hoang dã ăn, thưởng thức gà nướng cơm lam" },
+      { time: "15:00", title: "Hái dâu tây & check-in đồi chè Cầu Đất Farm", note: "Thưởng thức cà phê Arabica nguyên chất tại nông trại" }
+    ]
+  }
+];
+
+// LỊCH SỬ CÁC CON ĐƯỜNG ĐÀ LẠT (DA LAT STREETS HERITAGE & HISTORY)
+// Dữ liệu được rà soát, đối chiếu nhiều nguồn (Wikipedia, báo Lâm Đồng, tư liệu du lịch chính thống)
+// tính đến 2026. Các mốc năm/địa chỉ có thể lệch nhẹ theo từng tài liệu lưu trữ khác nhau.
+const STREETS = [
+  {
+    id: "tran-hung-dao",
+    name: "Đường Trần Hưng Đạo",
+    subtitle: "Đại Lộ Biệt Thự Pháp Cổ & Sắc Hồng Mai Anh Đào",
+    nameOrigin: "Con đường mang tên Hưng Đạo Đại Vương Trần Quốc Tuấn (1226–1300) — vị Quốc công Tiết chế 3 lần đánh tan quân Nguyên Mông thế kỷ 13, một trong những anh hùng dân tộc được tôn kính bậc nhất lịch sử Việt Nam.",
+    history: "Thời Pháp thuộc, con đường mang tên Toàn quyền Paul Doumer — người đã ký quyết định quy hoạch Đà Lạt thành đô thị nghỉ dưỡng năm 1899. Đến năm 1953, đường được đổi tên thành Trần Hưng Đạo như hiện nay. Với chiều dài khoảng 2,2km, đây là một trong những tuyến đường di sản giá trị nhất Đà Lạt: từng có tới hàng trăm biệt thự kiểu Pháp được xây dựng dọc hai bên, phần lớn theo phong cách miền Bắc nước Pháp, ẩn mình dưới tán thông cổ thụ. Ngày nay nhiều căn đã được bảo tồn, cải tạo thành không gian nghỉ dưỡng — homestay mang đậm dấu ấn kiến trúc thời kỳ đầu hình thành thành phố.",
+    hotspots: [
+      { id: "dinh-bao-dai-2", name: "Dinh II Bảo Đại (Dinh Toàn Quyền)", desc: "Biệt điện nghỉ mát của Toàn quyền Đông Dương Jean Decoux, hoàn thành năm 1933", icon: "🏛️" },
+      { id: "biet-thu-co", name: "Quần thể biệt thự Pháp cổ", desc: "Chuỗi biệt thự kiến trúc châu Âu thập niên 1930 ẩn dưới rừng thông", icon: "🏰" },
+      { id: "doc-mai-anh-dao", name: "Cung đường Mai Anh Đào", desc: "Điểm ngắm hoa Mai Anh Đào nở rộ mỗi độ xuân về (tháng 1–2)", icon: "🌸" }
+    ],
+    relatedLocationIds: ["ho-xuan-huong", "ga-da-lat"],
+    image: "image/tran-hung-dao.webp"
+  },
+  {
+    id: "yersin-nguyen-trai",
+    name: "Đường Yersin",
+    subtitle: "Tuyến Đường Tri Thức Dẫn Tới Nhà Ga Cổ Đẹp Bậc Nhất Đông Dương",
+    nameOrigin: "Đặt theo tên Bác sĩ Alexandre Yersin (1863–1943) — nhà khoa học, bác sĩ vi khuẩn học người Pháp gốc Thụy Sĩ, người đã khám phá ra cao nguyên Lâm Viên trong chuyến thám hiểm năm 1893 và đề xuất với Toàn quyền Paul Doumer việc xây dựng một trung tâm nghỉ dưỡng cho người Âu tại đây — tiền đề hình thành thành phố Đà Lạt.",
+    history: "Con đường hình thành cùng giai đoạn quy hoạch trung tâm Đà Lạt đầu thế kỷ 20, gắn liền với công trình Ga Đà Lạt được khởi công năm 1932 và hoàn thành năm 1938 — ga đầu mối của tuyến đường sắt răng cưa Tháp Chàm – Đà Lạt dài 84km, một trong những công trình giao thông độc đáo nhất Đông Dương thời bấy giờ. Khu vực này cũng từng là nơi tọa lạc của Trường Trung học Yersin (tiền thân Trường Cao đẳng Sư phạm Đà Lạt ngày nay), biểu tượng cho truyền thống giáo dục lâu đời của thành phố.",
+    hotspots: [
+      { id: "ga-da-lat", name: "Ga Đà Lạt cổ", desc: "Nhà ga mang phong cách Art Déco, 3 mái nhọn cách điệu đỉnh núi Langbiang, xây 1932–1938", icon: "🚂" },
+      { id: "cd-su-pham", name: "Trường CĐ Sư Phạm Đà Lạt", desc: "Tiền thân là Trường Trung học Yersin, nổi bật với dãy nhà hình vòng cung độc đáo", icon: "🏫" },
+      { id: "cong-vien-yersin", name: "Khu vực ven Hồ Xuân Hương", desc: "Không gian cây xanh nối trung tâm hồ với khu vực nhà ga", icon: "🌳" }
+    ],
+    relatedLocationIds: ["ga-da-lat", "ho-xuan-huong"],
+    image: "image/ga-da-lat.webp"
+  },
+  {
+    id: "tran-phu",
+    name: "Đường Trần Phú",
+    subtitle: "Trục Đường Trung Tâm Với Thánh Đường Con Gà & Khách Sạn Trăm Tuổi",
+    nameOrigin: "Tôn vinh Trần Phú (1904–1931) — Tổng Bí thư đầu tiên của Đảng Cộng sản Đông Dương.",
+    history: "Đây là một trong những trục đường trung tâm được người Pháp quy hoạch từ giai đoạn đầu hình thành Đà Lạt, nơi tập trung các công trình biểu tượng còn nguyên vẹn đến ngày nay. Nổi bật nhất là Nhà thờ Chính tòa Thánh Nicôla Bari (Nhà thờ Con Gà) tại số 15 Trần Phú — khởi công năm 1931, hoàn thành năm 1942 với tháp chuông cao 47m. Kế đó là khách sạn Dalat Palace (số 2 Trần Phú), nguyên tên Langbian Palace, được xây dựng từ 1916 và khánh thành năm 1922 — một trong những công trình khách sạn cổ và sang trọng bậc nhất Đông Dương thời Pháp thuộc, đến nay vẫn giữ nguyên phong cách kiến trúc châu Âu cổ điển pha Art Déco.",
+    hotspots: [
+      { id: "nha-tho-con-ga", name: "Nhà thờ Con Gà", desc: "Tháp chuông cao 47m với tượng gà trống Gaulois bằng đồng trên đỉnh, xây 1931–1942", icon: "⛪" },
+      { id: "dalat-palace", name: "Khách sạn Dalat Palace", desc: "Nguyên tên Langbian Palace, xây dựng 1916–1922, khách sạn 5 sao cổ nhất Đà Lạt", icon: "🏨" },
+      { id: "cho-da-lat-vong-xoay", name: "Khu vực trung tâm Hòa Bình", desc: "Nối liền với khu chợ và vòng xoay trung tâm thành phố", icon: "🏙️" }
+    ],
+    relatedLocationIds: ["nha-tho-con-ga", "ho-xuan-huong"],
+    image: "image/nha-tho-con-ga.webp"
+  },
+  {
+    id: "nguyen-thi-minh-khai",
+    name: "Đường Nguyễn Thị Minh Khai",
+    subtitle: "Trái Tim Mua Sắm, Ẩm Thực & Chợ Đêm Sầm Uất Nhất Phố Núi",
+    nameOrigin: "Tôn vinh Nguyễn Thị Minh Khai (1910–1941) — nữ chiến sĩ cách mạng, Bí thư Thành ủy Sài Gòn – Chợ Lớn thời kỳ tiền khởi nghĩa.",
+    history: "Con đường chạy dọc khu chợ trung tâm — nơi từ năm 1929 từng có một 'Chợ Cây' bằng gỗ lợp tôn, bị thiêu rụi trong trận hỏa hoạn năm 1937 và được xây lại kiên cố bằng gạch. Đến năm 1958, chính quyền cho khởi công xây dựng ngôi chợ 2 tầng có sân thượng theo thiết kế của kiến trúc sư Nguyễn Duy Đức, nhà thầu Nguyễn Linh Chiểu thi công, hoàn thành năm 1960 — trở thành một trong những khu chợ lầu đầu tiên của Việt Nam. Sau này kiến trúc sư nổi tiếng Ngô Viết Thụ còn tham gia chỉnh trang mặt tiền chợ. Về đêm, khu vực quanh chợ biến thành Chợ Đêm (còn gọi vui là 'Chợ Âm Phủ') — thiên đường ẩm thực đường phố náo nhiệt bậc nhất Đà Lạt.",
+    hotspots: [
+      { id: "cho-da-lat", name: "Chợ Đà Lạt & Chợ Đêm", desc: "Chợ lầu 2 tầng xây 1958–1960, biểu tượng thương mại của thành phố", icon: "🍜" },
+      { id: "cau-hong-kong", name: "Góc check-in cầu thang chợ", desc: "Góc chụp ảnh hoài cổ quen thuộc với giới trẻ", icon: "📸" },
+      { id: "ho-xuan-huong", name: "Hồ Xuân Hương lân cận", desc: "Chỉ cách khu chợ khoảng 5 phút đi bộ", icon: "🛶" }
+    ],
+    relatedLocationIds: ["cho-da-lat", "ho-xuan-huong"],
+    image: "image/nguyen-thi-minh-khai.webp"
+  },
+  {
+    id: "hung-vuong-tai-mat",
+    name: "Đường Hùng Vương — Trại Mát",
+    subtitle: "Cung Đường Hoa Dã Quỳ Dẫn Tới Chùa Ve Chai & Đồi Chè Trăm Tuổi",
+    nameOrigin: "Đặt tên theo các Vua Hùng — những vị vua dựng nước đầu tiên trong truyền thuyết dân tộc Việt Nam.",
+    history: "Đây là tuyến đường huyết mạch (thuộc Quốc lộ 20) nối trung tâm Đà Lạt với khu vực Trại Mát, Cầu Đất và các huyện phía Đông Nam tỉnh Lâm Đồng. Cuối đường Hùng Vương rẽ vào đường Tự Phước sẽ dẫn tới Chùa Linh Phước — hay còn gọi là 'Chùa Ve Chai' — được khởi công xây dựng từ năm 1949, nổi bật với nghệ thuật khảm sành sứ tinh xảo và hiện nắm giữ 11 kỷ lục Việt Nam, trong đó có Linh Tháp cao 36m — tháp chuông cao nhất cả nước. Xa hơn về phía Cầu Đất là vùng đồi chè được người Pháp thành lập từ năm 1927 (Sở Trà Cầu Đất), một trong những đồn điền chè lâu đời nhất Đông Dương, nay là điểm săn mây nổi tiếng.",
+    hotspots: [
+      { id: "chua-linh-phuoc", name: "Chùa Linh Phước (Chùa Ve Chai)", desc: "Kiến trúc khảm sành sứ độc đáo, khởi công 1949, giữ 11 kỷ lục Việt Nam", icon: "🛕" },
+      { id: "doi-che-cau-dat", name: "Đồi chè Cầu Đất", desc: "Đồn điền chè do người Pháp lập năm 1927, điểm săn mây nổi tiếng", icon: "🍃" },
+      { id: "lang-hoa-thai-phien", name: "Làng hoa Thái Phiên", desc: "Vùng trồng hoa công nghệ cao với hệ thống nhà kính rực sáng về đêm", icon: "✨" }
+    ],
+    relatedLocationIds: ["chua-linh-phuoc", "doi-che-cau-dat", "lang-hoa-thai-phien"],
+    image: "image/trai-mat.webp"
+  },
+  {
+    id: "le-hong-phong",
+    name: "Đường Lê Hồng Phong",
+    subtitle: "Cung Đường Biệt Thự Yên Tĩnh Dẫn Lối Tới Dinh Vua & Ngôi Nhà Quái Dị",
+    nameOrigin: "Đặt theo tên Lê Hồng Phong (1902–1942) — Tổng Bí thư thứ hai của Đảng Cộng sản Đông Dương.",
+    history: "Tuyến đường uốn lượn qua những đồi thông yên tĩnh phía Nam trung tâm, là trục di chuyển chính để tới hai công trình kiến trúc nổi tiếng bậc nhất Đà Lạt: rẽ vào đường Triệu Việt Vương sẽ tới Dinh III Bảo Đại (số 1 Triệu Việt Vương) — biệt điện mùa hè của vị vua cuối cùng triều Nguyễn, xây dựng 1933–1938; còn rẽ vào đường Huỳnh Thúc Kháng sẽ dẫn tới Biệt thự Hằng Nga hay 'Crazy House' (số 3 Huỳnh Thúc Kháng) — công trình kiến trúc kỳ dị do kiến trúc sư Đặng Việt Nga khởi xướng xây dựng từ năm 1990, từng được nhật báo Trung Quốc bình chọn vào top 10 tòa nhà kỳ lạ nhất thế giới.",
+    hotspots: [
+      { id: "dinh-bao-dai-3", name: "Dinh III Bảo Đại (rẽ vào Triệu Việt Vương)", desc: "Biệt điện mùa hè của Vua Bảo Đại & Nam Phương Hoàng hậu, xây 1933–1938", icon: "🏰" },
+      { id: "crazy-house", name: "Biệt thự Hằng Nga – Crazy House (rẽ vào Huỳnh Thúc Kháng)", desc: "Kiến trúc kỳ dị mê cung cây cổ thụ, khởi công từ năm 1990", icon: "🌀" },
+      { id: "cafe-view-doi", name: "Chuỗi cà phê view đồi thông", desc: "Không gian cà phê yên tĩnh, view hoàng hôn lãng mạn dọc tuyến đường", icon: "☕" }
+    ],
+    relatedLocationIds: ["dinh-bao-dai-3"],
+    image: "image/le-hong-phong.webp"
+  },
+  {
+    id: "hoang-van-thu",
+    name: "Đường Hoàng Văn Thụ & Cam Ly",
+    subtitle: "Cung Đường Làng Hoa Vạn Thành & Thác Nước Trong Thi Ca Đà Lạt",
+    nameOrigin: "Tôn vinh Hoàng Văn Thụ (1906–1944) — nhà cách mạng, Ủy viên Thường vụ Trung ương Đảng Cộng sản Đông Dương.",
+    history: "Con đường dẫn về hướng Tà Nung, đi qua khu vực Làng hoa Vạn Thành — một trong những làng nghề trồng hoa hồng lâu đời và quy mô lớn của Đà Lạt, nơi nông dân địa phương đã gắn bó với nghề trồng hoa thương phẩm suốt nhiều thập niên. Gần đó là Thác Cam Ly, ngọn thác gắn liền với dòng suối Cam Ly chảy qua trung tâm thành phố (cũng chính là con suối được người Pháp chặn dòng để tạo nên Hồ Xuân Hương năm 1919) — địa danh từng đi vào nhiều áng thơ, bản nhạc viết về Đà Lạt.",
+    hotspots: [
+      { id: "lang-hoa-van-thanh", name: "Làng hoa Vạn Thành", desc: "Làng nghề trồng hoa hồng truyền thống quy mô lớn của Đà Lạt", icon: "🌹" },
+      { id: "thac-cam-ly", name: "Thác Cam Ly", desc: "Ngọn thác gắn với dòng suối tạo nên Hồ Xuân Hương, quen thuộc trong thơ ca Đà Lạt", icon: "🌊" },
+      { id: "doi-thong-ta-nung", name: "Hướng về Tà Nung", desc: "Cung đường đồi thông yên tĩnh, ít khách du lịch qua lại", icon: "🌲" }
+    ],
+    relatedLocationIds: ["vuon-hoa-thanh-pho", "lang-hoa-van-thanh"],
+    image: "image/hoang-van-thu.webp"
+  },
+  {
+    id: "mai-anh-dao",
+    name: "Đường Mai Anh Đào",
+    subtitle: "Con Đường Hoa Mộng Mơ Tới Thung Lũng Tình Yêu",
+    nameOrigin: "Được đặt tên theo loài hoa Mai Anh Đào đặc trưng, rực rỡ mỗi dịp xuân về.",
+    history: "Là một trong những trục đường du lịch chính phía Bắc thành phố, con đường này dẫn lối du khách qua những ngọn đồi thông bạt ngàn đến với các danh thắng nổi tiếng như Thung Lũng Tình Yêu, Đồi Mộng Mơ và Xứ sở thần tiên Lumiere.",
+    hotspots: [
+      { id: "thung-lung-tinh-yeu", name: "Thung Lũng Tình Yêu", desc: "Đồi thông và hồ nước lãng mạn", icon: "💖" },
+      { id: "vuon-anh-sang-lumiere", name: "Vườn Ánh sáng Lumiere", desc: "Không gian trình chiếu nghệ thuật ánh sáng", icon: "✨" },
+      { id: "mong-mo", name: "Khu du lịch Đồi Mộng Mơ", desc: "Giao lưu văn hóa cồng chiêng", icon: "🔥" }
+    ],
+    relatedLocationIds: ["thung-lung-tinh-yeu", "vuon-anh-sang-lumiere"],
+    image: "image/thung-lung-tinh-yeu.webp"
+  }
+];

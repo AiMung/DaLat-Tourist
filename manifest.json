@@ -1,0 +1,16 @@
+{
+  "name": "Đà Lạt 360",
+  "short_name": "Đà Lạt 360",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2f9e58",
+  "description": "Cẩm nang check-in & chuyện xưa phố núi Đà Lạt",
+  "icons": [
+    {
+      "src": "image/logo_Doan.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp"
+    }
+  ]
+}
