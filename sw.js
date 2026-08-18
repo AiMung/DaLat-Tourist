@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dalat-360-v1';
+const CACHE_NAME = 'dalat-360-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -12,22 +12,36 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(urlsToCache);
-      })
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', event => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  if (req.method !== 'GET' || url.origin !== location.origin) {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
+    fetch(req)
       .then(response => {
-        if (response) {
-          return response; // Trả về file từ cache
-        }
-        return fetch(event.request).catch(() => {
-            // Khi offline và không có cache, có thể fallback
-        });
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+        return response;
       })
+      .catch(() => caches.match(req))
   );
 });

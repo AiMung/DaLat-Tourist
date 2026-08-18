@@ -107,9 +107,9 @@ const BLOOMING_SEASONS = [
 ];
 
 const CATEGORIES = {
-  ho: { label: "Hồ nước", icon: "wave" },
+  ho: { label: "Danh lam thắng cảnh", icon: "wave" },
   "kien-truc": { label: "Kiến trúc", icon: "arch" },
-  thac: { label: "Thác nước", icon: "falls" },
+  //thac: { label: "Cảnh quan", icon: "landscape" },
   "nui-doi": { label: "Núi & Đồi", icon: "peak" },
   "tam-linh": { label: "Tôn giáo", icon: "lotus" },
   "vuon-hoa": { label: "Vườn hoa", icon: "flower" },
@@ -300,7 +300,7 @@ const LOCATIONS = [
   {
     id: "thac-datanla",
     name: "Thác Datanla",
-    category: "thac",
+    category: "ho",
     lat: 11.903498639312062,
     lng: 108.44970236150712,
     image: "image/thac-datanla.webp",
@@ -661,7 +661,7 @@ const LOCATIONS = [
   {
     id: "thac-prenn",
     name: "Thác Prenn",
-    category: "thac",
+    category: "ho",
     lat: 11.877390896013864,
     lng: 108.47051559791893,
     image: "image/thac-prenn.webp",
@@ -877,7 +877,7 @@ const LOCATIONS = [
   {
     id: "thac-pongour",
     name: "Thác Pongour",
-    category: "thac",
+    category: "ho",
     lat: 11.689987741399811,
     lng: 108.26455991850246,
     image: "image/thac-pongour.webp",
@@ -985,7 +985,7 @@ const LOCATIONS = [
   {
     id: "thac-voi",
     name: "Thác Voi",
-    category: "thac",
+    category: "ho",
     lat: 11.823890816058352,
     lng: 108.33636846406398,
     image: "image/thac-voi.webp",

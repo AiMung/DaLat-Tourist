@@ -14,6 +14,7 @@ const HOME_FEATURED_IDS = [
   "nha-tho-con-ga",
   "cd-su-pham",
   "ga-da-lat",
+
   "ho-tuyen-lam",
   "thac-datanla",
   "thac-prenn",
@@ -1209,6 +1210,24 @@ async function initWeatherWidget() {
 // 2. Leaflet Interactive Map
 let daLatMap = null;
 let mapMarkers = [];
+function createMarkerIcon(loc) {
+  const iconSvg = CATEGORY_ICON_SVG[loc.category] || CATEGORY_ICON_ALL;
+  const html = `
+    <div class="custom-map-pin">
+      <div class="pin-head">
+        <div class="pin-icon-inner">${iconSvg}</div>
+      </div>
+      <div class="pin-tail"></div>
+    </div>
+  `;
+  return L.divIcon({
+    className: '',
+    html,
+    iconSize: [34, 42],
+    iconAnchor: [17, 42],
+    popupAnchor: [0, -42]
+  });
+}
 
 function initLeafletMap() {
   if (daLatMap) {
@@ -1225,18 +1244,13 @@ function initLeafletMap() {
 
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
-    maxZoom: 19
+    maxZoom: 19,
+    maxNativeZoom: 17
   }).addTo(daLatMap);
-  const customIcon = L.divIcon({
-    className: 'custom-map-pin',
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
-  });
 
   LOCATIONS.forEach(loc => {
     if (loc.lat && loc.lng) {
-      const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(daLatMap);
+      const marker = L.marker([loc.lat, loc.lng], { icon: createMarkerIcon(loc) }).addTo(daLatMap);
       const popupHtml = `
         <div style="text-align:center; min-width: 160px;">
           <h4 style="margin:0 0 5px; font-weight:700; color:var(--pine); font-family: var(--font-display);">${loc.name}</h4>
